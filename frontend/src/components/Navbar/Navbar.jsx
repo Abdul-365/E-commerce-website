@@ -24,8 +24,6 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
-
-
 const categories = [
     {
         name: 'Mobiles, Tablets & More',
@@ -147,24 +145,7 @@ export default function NavBar({
         <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                    {/* ----------------------------- Mobile view ----------------------------- */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -218,7 +199,30 @@ export default function NavBar({
                     >
                         LOGO
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    {/* ----------------------------- Desktop view ----------------------------- */}
+                    <Box sx={{ 
+                        flex: '1 1 0', 
+                        width: 0,
+                        display: { xs: 'none', md: 'flex' }
+                    }}>
+                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            LOGO
+                        </Typography>
                         <Button
                             id="basic-button"
                             aria-controls={open ? 'basic-menu' : undefined}
@@ -229,6 +233,12 @@ export default function NavBar({
                         >
                             Categories
                         </Button>
+                    </Box>
+                    <Box sx={{ 
+                        flex: '2 1 0', 
+                        width: 0,
+                        display: { xs: 'none', md: 'flex' }
+                    }}>
                         <Menu
                             id="basic-menu"
                             anchorEl={anchorEl}
@@ -251,87 +261,99 @@ export default function NavBar({
                                 ))}
                             </MenuList>
                         </Menu>
-                    </Box>
-                    <Search>
-                        <SearchIconWrapper>
+                        <Search sx={{
+                            flexGrow: 1,
+                        }}>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                sx={{
+                                    '& .MuiInputBase-input': {
+                                        width: '20rem'
+                                    }
+                                }}
+                                value={search}
+                                onChange={(event) => setSearch(event.target.value)}
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                        <Button component={Link} to={`/products/search/${search}`} variant='contained' color='info'>
                             <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            value={search}
-                            onChange={(event) => setSearch(event.target.value)}
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Button component={Link} to={`/products/search/${search}`} variant='contained' color='info'>
-                        <SearchIcon />
-                    </Button>
-                    {user
-                        ?
-                        <>
-                            <Button onClick={() => setCartDrawer(true)}>
-                                <Badge badgeContent={user.cartItems} color="secondary">
-                                    <ShoppingCartOutlinedIcon sx={{ color: 'white' }} />
-                                </Badge>
-                            </Button>
-                            <Cart
-                                user={user}
-                                cartDrawer={cartDrawer}
-                                setCartDrawer={setCartDrawer}
-                                updateInCart={updateInCart}
-                                removeFromCart={removeFromCart}
-                            />
-                            <Box sx={{ flexGrow: 0 }}>
-                                <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar alt="Remy Sharp" src={user.userImage} />
-                                    </IconButton>
-                                </Tooltip>
-                                <Menu
-                                    sx={{ mt: '45px' }}
-                                    PaperProps={{ style: { width: 200 } }}
-                                    id="menu-appbar"
-                                    anchorEl={anchorElUser}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorElUser)}
-                                    onClose={handleCloseUserMenu}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    <MenuItem component={Link} to='/user' onClick={() => setUserTab(0)} key="Profile">
-                                        <Typography textAlign="center">Profile</Typography>
-                                    </MenuItem>
-                                    <MenuItem component={Link} to='/user' onClick={() => setUserTab(2)} key="Orders">
-                                        <Typography textAlign="center">Orders</Typography>
-                                    </MenuItem>
-                                    <MenuItem key="Sign Out" onClick={signOut}>
-                                        <Typography textAlign="center">Sign Out</Typography>
-                                    </MenuItem>
-                                </Menu>
-                            </Box>
-                        </>
-                        :
-                        <>
-                            <Button sx={{ color: 'white' }} onClick={() => setLoginDialog(true)}>
-                                Sign in
-                            </Button>
-                            <Button component={Link} to='/user/signup' sx={{ color: 'white' }}>
-                                Sign Up
-                            </Button>
-                            <Login
-                                setTrigger={setTrigger}
-                                loginDialog={loginDialog}
-                                handleClose={() => setLoginDialog(false)}
-                            />
-                        </>
-                    }
+                        </Button>
+                    </Box>
+                    <Box sx={{ 
+                        flex: '1 1 0', 
+                        width: 0,
+                        justifyContent: 'flex-end',
+                        display: { xs: 'none', md: 'flex' }
+                    }}>
+                        {user
+                            ?
+                            <>
+                                <Button onClick={() => setCartDrawer(true)}>
+                                    <Badge badgeContent={user.cartItems} color="secondary">
+                                        <ShoppingCartOutlinedIcon sx={{ color: 'white' }} />
+                                    </Badge>
+                                </Button>
+                                <Cart
+                                    user={user}
+                                    cartDrawer={cartDrawer}
+                                    setCartDrawer={setCartDrawer}
+                                    updateInCart={updateInCart}
+                                    removeFromCart={removeFromCart}
+                                />
+                                <Box sx={{ flexGrow: 0 }}>
+                                    <Tooltip title="Open settings">
+                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                            <Avatar alt="Remy Sharp" src={user.userImage} />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Menu
+                                        sx={{ mt: '45px' }}
+                                        PaperProps={{ style: { width: 200 } }}
+                                        id="menu-appbar"
+                                        anchorEl={anchorElUser}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        open={Boolean(anchorElUser)}
+                                        onClose={handleCloseUserMenu}
+                                        onClick={handleCloseUserMenu}
+                                    >
+                                        <MenuItem component={Link} to='/user' onClick={() => setUserTab(0)} key="Profile">
+                                            <Typography textAlign="center">Profile</Typography>
+                                        </MenuItem>
+                                        <MenuItem component={Link} to='/user' onClick={() => setUserTab(2)} key="Orders">
+                                            <Typography textAlign="center">Orders</Typography>
+                                        </MenuItem>
+                                        <MenuItem key="Sign Out" onClick={signOut}>
+                                            <Typography textAlign="center">Sign Out</Typography>
+                                        </MenuItem>
+                                    </Menu>
+                                </Box>
+                            </>
+                            :
+                            <>
+                                <Button sx={{ color: 'white' }} onClick={() => setLoginDialog(true)}>
+                                    Sign in
+                                </Button>
+                                <Login
+                                    setTrigger={setTrigger}
+                                    loginDialog={loginDialog}
+                                    handleClose={() => setLoginDialog(false)}
+                                />
+                            </>
+                        }
+                    </Box>
+                    {/* ----------------------------- Universal view ----------------------------- */}
                 </Toolbar>
             </Container>
         </AppBar>

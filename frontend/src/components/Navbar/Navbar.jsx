@@ -146,7 +146,11 @@ export default function NavBar({
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* ----------------------------- Mobile view ----------------------------- */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{ 
+                        flex: '1 1 0', 
+                        width: 0,
+                        display: { xs: 'flex', md: 'none' }
+                    }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -180,25 +184,31 @@ export default function NavBar({
                             </MenuItem>
                         </Menu>
                     </Box>
+                    <Box sx={{ 
+                        flex: '2 1 0', 
+                        width: 0,
+                        display: { xs: 'flex', md: 'none' }
+                    }}>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href=""
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'flex', md: 'none' },
+                                flexGrow: 1,
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            LOGO
+                        </Typography>
+                    </Box>
                     {/* ----------------------------- Desktop view ----------------------------- */}
                     <Box sx={{ 
                         flex: '1 1 0', 
@@ -283,11 +293,12 @@ export default function NavBar({
                             <SearchIcon />
                         </Button>
                     </Box>
+                    {/* ----------------------------- Universal view ----------------------------- */}
                     <Box sx={{ 
                         flex: '1 1 0', 
                         width: 0,
-                        justifyContent: 'flex-end',
-                        display: { xs: 'none', md: 'flex' }
+                        display: 'flex',
+                        justifyContent: 'flex-end'
                     }}>
                         {user
                             ?
@@ -353,7 +364,6 @@ export default function NavBar({
                             </>
                         }
                     </Box>
-                    {/* ----------------------------- Universal view ----------------------------- */}
                 </Toolbar>
             </Container>
         </AppBar>

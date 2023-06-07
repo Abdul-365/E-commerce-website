@@ -4,7 +4,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { useState, useEffect, forwardRef } from 'react';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import axios from 'axios';
 import Navbar from './components/Navbar/Navbar';
 import ProductList from './components/Product/ProductList';
@@ -85,26 +85,33 @@ export default function App() {
     // ----------------------------------------------------------------
 
     return (
-        <Box backgroundColor='#F6F9FC'>
-            <Navbar
-                user={user}
-                setTrigger={setTrigger}
-                loginDialog={loginDialog}
-                setLoginDialog={setLoginDialog}
-                updateInCart={updateInCart}
-                removeFromCart={removeFromCart}
-                setUserTab={setUserTab}
-            />
-            <Container sx={{ mt: 8, mb: 5 }}>
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/products/category/:category' element={
+        <>
+            <Routes>
+                <Route path='/' element={
+                    <>
+                        <Navbar
+                            user={user}
+                            setTrigger={setTrigger}
+                            loginDialog={loginDialog}
+                            setLoginDialog={setLoginDialog}
+                            updateInCart={updateInCart}
+                            removeFromCart={removeFromCart}
+                            setUserTab={setUserTab}
+                        />
+                        <Container sx={{ mt: 8, mb: 8 }}>
+                            <Outlet />
+                        </Container>
+                        <Footer />
+                    </>
+                }>
+                    <Route path='' element={<Home />} />
+                    <Route path='products/category/:category' element={
                         <ProductList updateTrigger={updateTrigger} />}
                     />
-                    <Route path='/products/search/:search' element={
+                    <Route path='products/search/:search' element={
                         <ProductList updateTrigger={updateTrigger} />}
                     />
-                    <Route path='/product/:id' element={
+                    <Route path='product/:id' element={
                         <Product
                             user={user}
                             updateTrigger={updateTrigger}
@@ -113,7 +120,7 @@ export default function App() {
                             updateInCart={updateInCart}
                         />}
                     />
-                    <Route path='/user' element={
+                    <Route path='user' element={
                         <User
                             setTrigger={setTrigger}
                             user={user}
@@ -126,12 +133,11 @@ export default function App() {
                             openSnackbar={openSnackbar}
                         />}
                     />
-                    <Route path='/user/signup' element={
-                        <SignUp setTrigger={setTrigger} />}
-                    />
-                </Routes>
-            </Container>
-            <Footer />
+                </Route>
+                <Route path='/user/signup' element={
+                    <SignUp setTrigger={setTrigger} />}
+                />
+            </Routes>
             <Snackbar
                 anchorOrigin={{
                     vertical,
@@ -144,6 +150,6 @@ export default function App() {
                     {content}
                 </Alert>
             </Snackbar>
-        </Box>
+        </>
     );
 }

@@ -88,6 +88,17 @@ export const orderList = (req, res) => {
     });
 }
 
+export const userOrder = async (req, res) => {
+    try {
+        const orders = await Order.find({ user: req.params.userId })
+            .populate('product')
+            .sort({ createdAt: -1 });
+        res.json(orders);
+    } catch (err) {
+        res.send(err);
+    }
+}
+
 // let sellers = [];
 // for (const order of orders) {
 //     let seller = await Seller.findByIdAndUpdate(

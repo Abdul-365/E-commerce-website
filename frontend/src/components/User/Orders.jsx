@@ -55,6 +55,7 @@ export default function Orders({ user }) {
                 </Grid>
                 {orders.map(order => (
                     <Link
+                        key={order._id}
                         component={RouterLink}
                         to={`/order/${order._id}`}
                         underline='none'
@@ -100,7 +101,7 @@ export default function Orders({ user }) {
                                     </Grid>
                                     <Grid item xs={2}>
                                         <Typography>
-                                            ₹{(order.totalAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                            ₹{(order.total).toLocaleString(undefined, { maximumFractionDigits: 2 })}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={1} display='flex' justifyContent='flex-end'>

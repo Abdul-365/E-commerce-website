@@ -13,13 +13,16 @@ export const createOrder = (req, res) => {
                 });
         },
         function (cart, callback) {
-            let newOrder;
             let newOrders = [];
             for (const item of cart) {
-                newOrder = new Order({
+                const subtotal = item.product.price * item.quantity;
+                const newOrder = new Order({
                     product: item.product._id,
                     quantity: item.quantity,
-                    totalAmount: (item.product.price * item.quantity),
+                    subtotal: subtotal,
+                    shippingCharges: subtotal > 1500 ? 0 : 60,
+                    tax: subtotal * 0.2,
+                    total: subtotal + (subtotal * 0.18) + (subtotal > 1500 ? 0 : 60),
                     user: req.body.user,
                     address: req.body.address
                 })
@@ -86,17 +89,6 @@ export const orderList = (req, res) => {
         if (err) res.send(err);
         res.json(orders);
     });
-}
-
-export const userOrder = async (req, res) => {
-    try {
-        const orders = await Order.find({ user: req.params.userId })
-            .populate('product')
-            .sort({ createdAt: -1 });
-        res.json(orders);
-    } catch (err) {
-        res.send(err);
-    }
 }
 
 // let sellers = [];

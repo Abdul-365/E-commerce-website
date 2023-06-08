@@ -3,7 +3,6 @@ import {
     orderInfo,
     orderList,
     updateOrder,
-    userOrder,
 } from '../controllers/orderController';
 
 const orderRoutes = (app) => {
@@ -17,10 +16,6 @@ const orderRoutes = (app) => {
     app.route('/order/:orderId')    
         .get(orderInfo)
         .put(updateOrder);
-
-    app.route('/order/user/:userId')
-        .get(userOrder);
-
 }
 
 export default orderRoutes;

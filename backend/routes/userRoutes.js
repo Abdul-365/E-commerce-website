@@ -1,6 +1,5 @@
 import {
     addAddress,
-    addPayMethod,
     addToCart,
     createCustomer,
     createSeller,
@@ -8,7 +7,6 @@ import {
     customerList,
     deleteAddress,
     deletefromCart,
-    deletePayMethod,
     deleteUser,
     displayUser,
     login,
@@ -16,7 +14,6 @@ import {
     sellerList,
     updateAddress,
     updateInCart,
-    updatePayMethod,
     updateCustomer,
     updateSeller,
     userOrders,

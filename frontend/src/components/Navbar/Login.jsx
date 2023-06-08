@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import { Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom'; 
 
 export default function Login(props) {
 
@@ -35,12 +37,9 @@ export default function Login(props) {
 
     return (
         <Dialog open={props.loginDialog} onClose={props.handleClose}>
-            <DialogTitle></DialogTitle>
+            <DialogTitle>Sign In</DialogTitle>
             <form onSubmit={submitUser}>
                 <DialogContent>
-                    <DialogContentText>
-
-                    </DialogContentText>
                     <TextField
                         value={loginInfo.email}
                         onChange={handleChange}
@@ -63,6 +62,12 @@ export default function Login(props) {
                         fullWidth
                         variant="standard"
                     />
+                    <Typography mt={3} variant="subtitle2">
+                        {'New User? '}
+                        <Link component={RouterLink} to='/user/signup' onClick={() => props.handleClose}>
+                            Create an Account
+                        </Link>
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.handleClose}>Cancel</Button>

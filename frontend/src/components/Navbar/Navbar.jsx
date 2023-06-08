@@ -146,8 +146,8 @@ export default function NavBar({
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* ----------------------------- Mobile view ----------------------------- */}
-                    <Box sx={{ 
-                        flex: '1 1 0', 
+                    <Box sx={{
+                        flex: '1 1 0',
                         width: 0,
                         display: { xs: 'flex', md: 'none' }
                     }}>
@@ -184,12 +184,12 @@ export default function NavBar({
                             </MenuItem>
                         </Menu>
                     </Box>
-                    <Box sx={{ 
-                        flex: '2 1 0', 
+                    <Box sx={{
+                        flex: '2 1 0',
                         width: 0,
                         display: { xs: 'flex', md: 'none' }
                     }}>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                         <Typography
                             variant="h5"
                             noWrap
@@ -210,8 +210,8 @@ export default function NavBar({
                         </Typography>
                     </Box>
                     {/* ----------------------------- Desktop view ----------------------------- */}
-                    <Box sx={{ 
-                        flex: '1 1 0', 
+                    <Box sx={{
+                        flex: '1 1 0',
                         width: 0,
                         display: { xs: 'none', md: 'flex' }
                     }}>
@@ -244,8 +244,8 @@ export default function NavBar({
                             Categories
                         </Button>
                     </Box>
-                    <Box sx={{ 
-                        flex: '2 1 0', 
+                    <Box sx={{
+                        flex: '2 1 0',
                         width: 0,
                         display: { xs: 'none', md: 'flex' }
                     }}>
@@ -279,9 +279,10 @@ export default function NavBar({
                             </SearchIconWrapper>
                             <StyledInputBase
                                 sx={{
+                                    width: '100%',
                                     '& .MuiInputBase-input': {
-                                        width: '20rem'
-                                    }
+                                        width: '100%'
+                                    },
                                 }}
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
@@ -294,8 +295,8 @@ export default function NavBar({
                         </Button>
                     </Box>
                     {/* ----------------------------- Universal view ----------------------------- */}
-                    <Box sx={{ 
-                        flex: '1 1 0', 
+                    <Box sx={{
+                        flex: '1 1 0',
                         width: 0,
                         display: 'flex',
                         justifyContent: 'flex-end'

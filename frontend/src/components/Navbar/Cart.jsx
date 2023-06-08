@@ -13,16 +13,21 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 
-export default function Cart(props) {
-
-    if (props.user.cart) {
+export default function Cart({
+    user,
+    cartDrawer,
+    setCartDrawer,
+    updateInCart,
+    removeFromCart,
+}) {
+    if (user.cart) {
         return (
             <Drawer
                 anchor='right'
-                open={props.cartDrawer}
-                onClose={() => props.setCartDrawer(false)}
+                open={cartDrawer}
+                onClose={() => setCartDrawer(false)}
             >
-                <Box width='25em' display='flex' flexDirection='column' p={2}>
+                <Box width='20em' display='flex' flexDirection='column' p={2} >
                     <Stack
                         direction='row'
                         alignItems='center'
@@ -35,23 +40,23 @@ export default function Cart(props) {
                     >
                         <ShoppingCartIcon color='primary' fontSize='large' sx={{ pl: 0.5 }} />
                         <Typography variant='subtitle1' fontWeight='500' ml={2} mr='auto'>
-                            {props.user.cartItems} Items
-                            </Typography>
+                            {user.cartItems} Items
+                        </Typography>
                         <IconButton
                             sx={{ mr: -1 }}
                             color='primary'
-                            onClick={() => props.setCartDrawer(false)}
+                            onClick={() => setCartDrawer(false)}
                         >
                             <CloseIcon fontSize='large' />
                         </IconButton>
                     </Stack>
                     <Box mt={6} mb={8}>
-                        {props.user.cart.map(item => (
+                        {user.cart.map(item => (
                             <Box display='flex' alignItems='center' key={item.product._id} mt={2}>
                                 <Box>
                                     <IconButton
                                         color='primary'
-                                        onClick={() => props.updateInCart(item.product._id, item.quantity + 1)}
+                                        onClick={() => updateInCart(item.product._id, item.quantity + 1)}
                                     >
                                         <AddIcon />
                                     </IconButton>
@@ -60,14 +65,14 @@ export default function Cart(props) {
                                     </Typography>
                                     <IconButton
                                         color='tertiary'
-                                        onClick={() => props.updateInCart(item.product._id, item.quantity - 1)}
+                                        onClick={() => updateInCart(item.product._id, item.quantity - 1)}
                                         disabled={item.quantity === 1 ? true : false}
                                     >
                                         <RemoveIcon />
                                     </IconButton>
                                 </Box>
                                 <Link
-                                    onClick={() => props.setCartDrawer(false)}
+                                    onClick={() => setCartDrawer(false)}
                                     component={RouterLink}
                                     color='text.primary'
                                     to={`/product/${item.product._id}`}
@@ -88,17 +93,19 @@ export default function Cart(props) {
                                 </Link>
                                 <IconButton
                                     color='primary'
-                                    onClick={() => props.removeFromCart(item.product._id)}
+                                    onClick={() => removeFromCart(item.product._id)}
                                 >
                                     <DeleteOutlinedIcon />
                                 </IconButton>
                             </Box>
                         ))}
                     </Box>
-                    <Box width='25em' bottom={0} py={2} position='fixed' backgroundColor='white'>
-                        <Button size='large' fullWidth sx={{ textTransform: 'none' }} variant='contained'>
-                            Checkout Now (₹{(props.user.cartTotal).toLocaleString(undefined, { maximumFractionDigits: 2 })})
-                        </Button>
+                    <Box width='20em' bottom={0} py={2} position='fixed' backgroundColor='white'>
+                        {user.cart.length > 0 &&
+                            <Button size='large' fullWidth sx={{ textTransform: 'none' }} variant='contained'>
+                                Checkout Now (₹{(user.cartTotal).toLocaleString(undefined, { maximumFractionDigits: 2 })})
+                            </Button>
+                        }
                     </Box>
                 </Box>
             </Drawer>

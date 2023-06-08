@@ -11,10 +11,10 @@ import ProductList from './components/Product/ProductList';
 import Home from './components/Home';
 import Product from './components/Product/Product';
 import User from './components/User/User'
+import Order from './components/User/Order';
 import Container from '@mui/material/Container';
 import SignUp from './components/User/SignUp';
 import Footer from './components/Footer';
-import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -133,6 +133,7 @@ export default function App() {
                             openSnackbar={openSnackbar}
                         />}
                     />
+                    <Route path='order/:orderId' element={<Order user={user} />} />
                 </Route>
                 <Route path='/user/signup' element={
                     <SignUp setTrigger={setTrigger} />}
